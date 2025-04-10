@@ -6,14 +6,8 @@ class Student {
     // Method to create a new student
     public static function createStudent($name, $email, $password) {
         $conn = getDatabase();
-        $conn->query("
-            CREATE TABLE IF NOT EXISTS students (
-            user_id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) UNIQUE,
-            email VARCHAR(255),
-            password TEXT
-        );
-        ");
+        // Check if the table exists, if not create it
+        self::createStudentTable($conn);
         $sql = "INSERT INTO students (name, email, password) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -25,14 +19,19 @@ class Student {
         return $insertedId; 
     }
 
-    // Method to get student by ID
-    public static function getStudentById($id) {
+    // Method to get student by Email
+    public static function getStudentByEmail($email) {
         $conn = getDatabase();
-        $sql = "SELECT * FROM students WHERE id = ?";
+        self::createStudentTable($conn);
+        $sql = "SELECT user_id, name, email, password FROM students WHERE email = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->get_result();
+        $student = $result->fetch_assoc();
+        $stmt->close();
+        $conn->close();
+        return $student;
     }
 
     // Method to update student information
@@ -57,6 +56,18 @@ class Student {
         $stmt->close();
         $conn->close();
         return $success;
+    }
+
+    // Method to create a new student table if it doesn't exist
+    private static function createStudentTable($conn) {
+        $sql = "CREATE TABLE IF NOT EXISTS students (
+            user_id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )";
+        $conn->query($sql);
     }
 }
 ?>

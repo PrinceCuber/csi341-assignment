@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Student Login</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/public/css/style.css">
 </head>
+
 <body>
   <div class="container">
     <h2>Student Login</h2>
-      <form action="student-login.php" method="post">
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Password" required>
+    <p id="error-message" class="error">The was an error</p>
+    <form action="/routing.php?action=getStudent" method="post">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
       <button type="submit">Login</button>
     </form>
-    <p>Don't have an account? <a href="student_signup.html">Sign Up</a></p>
+    <p>Don't have an account? <a href="student-signup.html">Sign Up</a></p>
   </div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const errorMessage = params.get('error');
+  if (errorMessage) {
+    document.getElementById('error-message').textContent = errorMessage;
+    document.getElementById('error-message').style.display = 'block';
+  } else {
+    document.getElementById('error-message').style.display = 'none';
+  }
+</script>
 </body>
+
 </html>

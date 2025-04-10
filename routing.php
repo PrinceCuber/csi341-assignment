@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 $action = $_GET['action'] ?? null;
 
 // Create an instance of the controller
-$studentController = new UserController();
+$studentController = new StudentController();
 
 switch ($action) {
     case 'createStudent':
@@ -19,15 +19,16 @@ switch ($action) {
             $name = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $studentController->createStudent($name, $email, $password);
+            $studentController->signUpStudent($name, $email, $password);
         }
         break;
 
     case 'getStudent':
-        // Handle fetching a student by ID
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $studentController->getStudent($id);
+        // Handle fetching a student by Email
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $studentController->loginStudent($email, $password);
         }
         break;
 

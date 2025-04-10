@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
   header("Location: student-login.html");
   exit();
 }
@@ -14,14 +14,16 @@ $email = $_SESSION['email'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>IAMS Dashboard</title>
   <link rel="stylesheet" href="/public/css/dashboard.css">
 </head>
+
 <body>
+  <header class="header">Industrial Attachment Management System (IAMS)</header>
   <div class="container">
-    <header class="header">Industrial Attachment Management System (IAMS)</header>
 
     <aside class="sidebar">
       <div class="user-profile">
@@ -32,10 +34,10 @@ $email = $_SESSION['email'];
 
       <nav class="nav-menu">
         <button class="nav-btn"><i class="icon">🏠</i> <a href="home.php">Home</a></button>
-        <button class="nav-btn"><i class="icon">📊</i> Dashboard</button>
+        <button class="nav-btn active"><i class="icon">📊</i> Dashboard</button>
         <button class="nav-btn"><i class="icon">⚙️</i> Settings</button>
         <button class="nav-btn"><i class="icon">🔔</i> Notifications</button>
-        <button class="nav-btn"><i class="icon">🔓</i> logout</button>
+        <button class="nav-btn"><i class="icon">🔓</i><a href="../logout.php">logout</a></button>
       </nav>
     </aside>
 
@@ -48,4 +50,5 @@ $email = $_SESSION['email'];
     </main>
   </div>
 </body>
+
 </html>

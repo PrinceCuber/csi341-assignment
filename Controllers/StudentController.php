@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-class UserController {
+class StudentController {
     private $studentModel;
 
     public function __construct() {
@@ -13,7 +13,7 @@ class UserController {
     }
 
     // Handle creating a new user
-    public function createStudent($name, $email, $password) {
+    public function signUpStudent($name, $email, $password) {
         $studentID = $this->studentModel->createStudent($name, $email, $password);
         if ($studentID) {
             $_SESSION['user_id'] = $studentID;
@@ -22,6 +22,7 @@ class UserController {
             header("Location: Views/home.php");
             exit();
         } else {
+            // Failed to create user, redirect to signup page with error message
             $errorMessage = urlencode("Failed to create user.");
             header("Location: Views/student-signup.html?error=$errorMessage");
             exit(); 
@@ -29,12 +30,19 @@ class UserController {
     }
 
     // Handle fetching a user by ID
-    public function getStudent($id) {
-        $user = $this->studentModel->getStudentById($id);
-        if ($user) {
-            echo "User Details: " . json_encode($user);
+    public function loginStudent($email, $password) {
+        $user = $this->studentModel->getStudentByEmail($email);
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['name'];
+            $_SESSION['email'] = $user['email'];
+            header("Location: Views/dashboard.php");
+            exit();
         } else {
-            echo "User not found.";
+            // Invalid credentials, redirect to login page with error message
+            $errorMessage = urlencode("Invalid email or password.");
+            header("Location: Views/student-login.html?error=$errorMessage");
+            exit();
         }
     }
 

@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #567D86;
+    color: #000;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .header {
+    background-color: #83B6BD;
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .sidebar {
+    background-color: #75A2B1;
+    width: 200px;
+    padding: 1rem;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    height: 100%;
+  }
+  
+  .user-profile {
+    text-align: center;
+  }
+  
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #5596A0;
+    padding: 10px;
+  }
+  
+  .user-name {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .nav-menu {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .nav-btn {
+    background: #A2C2CF;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: left;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .nav-btn.active {
+    background: #4BB3D1;
+    color: black;
+  }
+  
+  .main-content {
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    gap: 1rem;
+    padding: 1rem;
+    margin-left: 220px;
+  }
+  
+  .card {
+    background: #A2C2CF;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  

@@ -51,3 +51,7 @@ p {
   text-align: center;
   margin-top: 1rem;
 }
+
+.error {
+  color: red;
+}

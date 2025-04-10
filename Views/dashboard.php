@@ -19,6 +19,7 @@ $email = $_SESSION['email'];
   <meta charset="UTF-8">
   <title>IAMS Dashboard</title>
   <link rel="stylesheet" href="/public/css/dashboard.css">
+  <script src="/public/js/dashboard.js"></script>
 </head>
 
 <body>
@@ -42,12 +43,19 @@ $email = $_SESSION['email'];
     </aside>
 
     <main class="main-content">
-      <div class="card">Student overview</div>
-      <div class="card">Assessment report</div>
-      <div class="card">Logbook tracker</div>
-      <div class="card">Reminders</div>
-      <div class="card">Upcoming visit</div>
+      <div class="card" onclick="showOverlay('Student overview')">Student overview</div>
+      <div class="card" onclick="showOverlay('Assessment report')">Assessment report</div>
+      <div class="card" onclick="showOverlay('Logbook tracker')">Logbook tracker</div>
+      <div class="card" onclick="showOverlay('Reminders')">Reminders</div>
+      <div class="card" onclick="showOverlay('Upcoming visit')">Upcoming visit</div>
     </main>
+
+    <div id="overlay" class="overlay" style="display: none;">
+      <div class="overlay-content">
+        <span id="overlay-text"></span>
+        <button onclick="closeOverlay()">Close</button>
+      </div>
+    </div>
   </div>
 </body>
 

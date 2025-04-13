@@ -35,7 +35,7 @@ class Student {
     // Method to get student by Email
     public static function getStudentByEmail($email) {
         $conn = getDatabase();
-        $sql = "SELECT student_id, name, email FROM students WHERE email = ?";
+        $sql = "SELECT student_id, name, email, password FROM students WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();

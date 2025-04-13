@@ -85,5 +85,16 @@ function getDatabase()
         )";
     $conn->query($sql);
 
+    $sql = "CREATE TABLE IF NOT EXISTS organisation_student (
+            organisation_student_id INT AUTO_INCREMENT PRIMARY KEY,
+            organisation_id INT NOT NULL,
+            student_id INT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (organisation_id) REFERENCES organisations(organisation_id) ON DELETE CASCADE,
+            FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
+        )";
+
+    $conn->query($sql);
+
     return $conn;
 }

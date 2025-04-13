@@ -35,7 +35,7 @@ class Organisation {
     // Method to get organisation by Email
     public static function getOrganisationByEmail($email) {
         $conn = getDatabase();
-        $sql = "SELECT organisation_id, name, email FROM organisations WHERE email = ?";
+        $sql = "SELECT organisation_id, name, email, password FROM organisations WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -68,6 +68,21 @@ class Organisation {
         $stmt->close();
         $conn->close();
         return $success;
+    }
+
+    // Method to get all organisations
+    public static function getAllOrganisations() {
+        $conn = getDatabase();
+        $sql = "SELECT organisation_id, name, email FROM organisations";
+        $result = $conn->query($sql);
+        $organisations = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $organisations[] = $row;
+            }
+        }
+        $conn->close();
+        return $organisations;
     }
 
     // Method to create an organisation registration

@@ -25,6 +25,9 @@ function showOverlay(text) {
     case 'Assessment reports':
       overlay = document.getElementById('reports');
       break;
+    case 'Students':
+      overlay = document.getElementById('students');
+      break;
     default:
       content = 'No content available.';
   }

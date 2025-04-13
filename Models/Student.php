@@ -69,5 +69,31 @@ class Student {
         $conn->close();
         return $success;
     }
+
+    public function createAttachment($studentID, $id_num, $phone_number, $dob, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship) {
+        $conn = getDatabase();
+        $sql = "INSERT INTO attachments (student_id, id_num, phone_number, dob, attachment_start_date, attachment_end_date, location, experience, doc_path, emergency_contact_name, emergency_contact_phone, emergency_contact_relationship) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('isssssssssss', $studentID, $id_num, $phone_number, $dob, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship);
+        $success = $stmt->execute();
+        $stmt->close();
+        $conn->close();
+        return $success;
+    }
+
+    // Method to get all students
+    public static function getAllStudents() {
+        $conn = getDatabase();
+        $sql = "SELECT * FROM students";
+        $result = $conn->query($sql);
+        $students = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $students[] = $row;
+            }
+        }
+        $conn->close();
+        return $students;
+    }
 }
 ?>

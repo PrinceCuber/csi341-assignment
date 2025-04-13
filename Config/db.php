@@ -56,5 +56,24 @@ function getDatabase()
         )";
     $conn->query($sql);
 
+    $sql = "CREATE TABLE IF NOT EXISTS attachments (
+            attachment_id INT AUTO_INCREMENT PRIMARY KEY,
+            student_id INT NOT NULL,
+            id_num VARCHAR(255) NOT NULL,
+            phone_number VARCHAR(255) NOT NULL,
+            dob DATE NOT NULL,
+            attachment_start_date DATE NOT NULL,
+            attachment_end_date DATE NOT NULL,
+            location VARCHAR(255) NOT NULL,
+            experience TEXT NOT NULL,
+            doc_path VARCHAR(255) NOT NULL,
+            emergency_contact_name VARCHAR(255) NOT NULL,
+            emergency_contact_phone VARCHAR(255) NOT NULL,
+            emergency_contact_relationship VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
+        )";
+    $conn->query($sql);
+
     return $conn;
 }

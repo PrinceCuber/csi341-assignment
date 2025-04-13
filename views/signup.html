@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IAMS: Sign Up</title>
+  <link rel="stylesheet" href="/public/css/index.css">
   <link rel="stylesheet" href="/public/css/style.css">
 </head>
 
@@ -12,42 +13,23 @@
   <div class="container">
     <h2>Sign Up</h2>
 
-    <label for="role">Select Role:</label>
-    <select id="role" onchange="showForm()">
-      <option value="">-- Choose --</option>
-      <option value="student">Student</option>
-      <option value="coordinator">Coordinator</option>
-      <option value="organisation">Organisation</option>
-    </select>
 
     <p id="error-message" class="error">The was an error</p>
-    <!-- Student Sign Up Form -->
     <form action="/routing.php?action=signup" id="student" class="role-form" method="post">
       <input type="text" name="username" placeholder="Full Name" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Password" required>
-      <input type="hidden" name="role" value="student">
+      <label for="role">Select Role:</label>
+      <select id="role" name="role" required>
+        <option value="">-- Choose --</option>
+        <option value="student">Student</option>
+        <option value="coordinator">Coordinator</option>
+        <option value="organisation">Organisation</option>
+      </select>
       <button type="submit">Sign Up</button>
     </form>
 
-    <!-- Coordinator Sign Up Form -->
-    <form action="/routing.php?action=signup" id="coordinator" class="role-form" method="post">
-      <input type="text" name="username" placeholder="Full Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <input type="hidden" name="role" value="coordinator">
-      <button type="submit">Sign Up</button>
-    </form>
-    <!-- to be fixed from kitso's work -->
-    <form action="/routing.php?action=signup" id="organisation" class="role-form" method="post">
-      <input type="text" name="username" placeholder="Full Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <input type="text" name="location" placeholder="Location" required>
-      <input type="text" name="tech_preferences" placeholder="Tech Preferences" required>
-      <input type="hidden" name="role" value="organisation">
-      <button type="submit">Sign Up</button>
-    </form>
+    
     <p>Already have an account? <a href="login.html">Login</a></p>
   </div>
 
@@ -60,14 +42,6 @@
     } else {
       document.getElementById('error-message').style.display = 'none';
     }
-
-    function showForm() {
-      const role = document.getElementById("role").value;
-      document.querySelectorAll(".role-form").forEach(f => f.classList.remove("active"));
-      if (role) {
-        document.getElementById(role).classList.add("active");
-      }
-    } 
   </script>
 </body>
 

@@ -57,6 +57,7 @@ p {
 }
 
 .role-form {
+  display: none;
   margin-top: 1rem;
 }
 

@@ -18,6 +18,7 @@ $email = $_SESSION['email'];
 <head>
   <meta charset="UTF-8">
   <title>IAMS Dashboard</title>
+  <link rel="stylesheet" href="/public/css/index.css">
   <link rel="stylesheet" href="/public/css/dashboard.css">
 </head>
 
@@ -32,11 +33,11 @@ $email = $_SESSION['email'];
       </div>
 
       <nav class="nav-menu">
-        <button class="nav-btn active"><i class="icon">🏠</i> home</button>
-        <button class="nav-btn"><i class="icon">📊</i><a href="dashboardStudent.php">Dashboard</a></button>
-        <button class="nav-btn"><i class="icon">⚙️</i> Settings</button>
-        <button class="nav-btn"><i class="icon">🔔</i> Notifications</button>
-        <button class="nav-btn"><i class="icon">🔓</i><a href="../logout.php">logout</a></button>
+        <a class="nav-btn active"><i class="icon">🏠</i> home</a>
+        <a href="dashboardStudent.php" class="nav-btn"><i class="icon">📊</i>Dashboard</a>
+        <a class="nav-btn"><i class="icon">⚙️</i> Settings</a>
+        <a class="nav-btn"><i class="icon">🔔</i> Notifications</a>
+        <a href="../logout.php" class="nav-btn"><i class="icon">🔓</i>logout</a>
       </nav>
     </aside>
 

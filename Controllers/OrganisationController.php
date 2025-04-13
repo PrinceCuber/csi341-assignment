@@ -13,8 +13,8 @@ class OrganisationController {
     }
 
     // Handle creating a new organisation
-    public function signUpOrganisation($name, $email, $password, $location, $techPreferences) {
-        $organisationID = $this->organisationModel->createOrganisation($name, $email, $location, $techPreferences, $password);
+    public function signUpOrganisation($name, $email, $password) {
+        $organisationID = $this->organisationModel->createOrganisation($name, $email, $password);
         if ($organisationID) {
             $_SESSION['organisation_id'] = $organisationID;
             $_SESSION['name'] = $name;
@@ -61,6 +61,17 @@ class OrganisationController {
             echo "Organisation deleted successfully.";
         } else {
             echo "Failed to delete organisation.";
+        }
+    }
+
+    // Handle creating an organisation registration
+    public function createOrganisationRegistration($organisationID, $contact_person, $contact_email, $slots, $skills) {
+        if ($this->organisationModel->createOrganisationRegistration($organisationID, $contact_person, $contact_email, $slots, $skills)) {
+            header("Location: views/dashboardOrganisation.php");
+            exit();
+        } else {
+            header("Location: views/organisationRegistrationForm.php?error=Failed to create organisation registration.");
+            exit();
         }
     }
 }

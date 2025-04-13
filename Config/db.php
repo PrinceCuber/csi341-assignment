@@ -49,8 +49,6 @@ function getDatabase()
             organisation_id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL UNIQUE,
-            location VARCHAR(255) NOT NULL,
-            tech_preferences TEXT NOT NULL,
             password TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )";
@@ -65,13 +63,25 @@ function getDatabase()
             attachment_start_date DATE NOT NULL,
             attachment_end_date DATE NOT NULL,
             location VARCHAR(255) NOT NULL,
-            experience TEXT NOT NULL,
+            skills TEXT NOT NULL,
             doc_path VARCHAR(255) NOT NULL,
             emergency_contact_name VARCHAR(255) NOT NULL,
             emergency_contact_phone VARCHAR(255) NOT NULL,
             emergency_contact_relationship VARCHAR(255) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
+        )";
+    $conn->query($sql);
+
+    $sql = "CREATE TABLE IF NOT EXISTS organisation_registration (
+            registration_id INT AUTO_INCREMENT PRIMARY KEY,
+            organisation_id INT NOT NULL,
+            contact_person VARCHAR(255) NOT NULL,
+            contact_email VARCHAR(255) NOT NULL,
+            slots INT NOT NULL,
+            skills TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (organisation_id) REFERENCES organisations(organisation_id) ON DELETE CASCADE
         )";
     $conn->query($sql);
 

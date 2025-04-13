@@ -18,6 +18,7 @@ $email = $_SESSION['email'];
 <head>
   <meta charset="UTF-8">
   <title>IAMS Dashboard</title>
+  <link rel="stylesheet" href="/public/css/index.css">
   <link rel="stylesheet" href="/public/css/dashboard.css">
 </head>
 

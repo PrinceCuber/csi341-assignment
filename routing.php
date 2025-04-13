@@ -28,17 +28,12 @@ switch ($action) {
             $name = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            if ($_POST['role'] == 'organisation') {
-                $location = $_POST['location'];
-                $techPreferences = $_POST['tech_preferences'];
-            }
-
             if($_POST['role'] == 'student'){
                 $studentController->signUpStudent($name, $email, $password);
             } else if($_POST['role'] == 'coordinator'){
                 $coordinatorController->signUpCoordinator($name, $email, $password);
             } else if ($_POST['role'] == 'organisation') {
-                $organisationController->signUpOrganisation($name, $email, $password, $location, $techPreferences);
+                $organisationController->signUpOrganisation($name, $email, $password,);
             } else if($_POST['role'] == 'admin'){
                 die("Admin role is not supported yet.");
             } else { 
@@ -59,7 +54,7 @@ switch ($action) {
             $attachment_Start_Date = $_POST['start_date'];
             $attachment_End_Date = $_POST['end_date'];
             $preferred_Location = $_POST['location'];
-            $experience = $_POST['experience'];
+            $skills = $_POST['skills'];
             $doc_path = $_FILES['upload_doc'];
             $uploadDir = "uploads/";
             if (!is_dir($uploadDir)) {
@@ -70,9 +65,19 @@ switch ($action) {
             $emergency_Contact_Name = $_POST['emergency_contact_name'];
             $emergency_Contact_Phone = $_POST['emergency_contact_phone'];
             $emergency_Contact_Relationship = $_POST['emergency_contact_relationship'];
-            $studentController->createAttachment($studentID, $id_Num, $phone_number, $date_Of_Birth, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship);
+            $studentController->createAttachment($studentID, $id_Num, $phone_number, $date_Of_Birth, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $skills, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship);
         }
         break;
+
+    case 'organisation_registration':
+        if( $_SERVER['REQUEST_METHOD'] === 'POST') {
+            $organisationID = $_SESSION['organisation_id'];
+            $contact_person = $_POST['contact_person'];
+            $contact_email = $_POST['contact_email'];
+            $slots = $_POST['slots'];
+            $skills = $_POST['skills'];
+            $organisationController->createOrganisationRegistration($organisationID, $contact_person, $contact_email, $slots, $skills);
+        }
 
     case 'login':
         // Handle fetching a user by Email

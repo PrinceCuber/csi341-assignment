@@ -35,7 +35,7 @@ class Student {
     // Method to get student by Email
     public static function getStudentByEmail($email) {
         $conn = getDatabase();
-        $sql = "SELECT student_id, name, email, password FROM students WHERE email = ?";
+        $sql = "SELECT student_id, name, email FROM students WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -70,11 +70,11 @@ class Student {
         return $success;
     }
 
-    public function createAttachment($studentID, $id_num, $phone_number, $dob, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship) {
+    public function createAttachment($studentID, $id_num, $phone_number, $dob, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $skills, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship) {
         $conn = getDatabase();
-        $sql = "INSERT INTO attachments (student_id, id_num, phone_number, dob, attachment_start_date, attachment_end_date, location, experience, doc_path, emergency_contact_name, emergency_contact_phone, emergency_contact_relationship) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO attachments (student_id, id_num, phone_number, dob, attachment_start_date, attachment_end_date, location, skills, doc_path, emergency_contact_name, emergency_contact_phone, emergency_contact_relationship) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('isssssssssss', $studentID, $id_num, $phone_number, $dob, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship);
+        $stmt->bind_param('isssssssssss', $studentID, $id_num, $phone_number, $dob, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $skills, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship);
         $success = $stmt->execute();
         $stmt->close();
         $conn->close();

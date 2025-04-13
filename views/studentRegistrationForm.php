@@ -19,6 +19,7 @@ $email = $_SESSION['email'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Attachment Registration Form</title>
+    <link rel="stylesheet" href="/public/css/index.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -114,8 +115,8 @@ $email = $_SESSION['email'];
         <label for="location">Preferred Location/Region:</label>
         <input type="text" id="location" name="location" placeholder="e.g. Maun" required><br>
  
-        <label for="experience">Experience(if any):</label><br>
-        <textarea id="experience" name="experience" placeholder="Describe any prior experience or projects" rows="4" cols="50"></textarea><br>
+        <label for="experience">Skills(if any):</label><br>
+        <input type="text" id="skills" name="skills" placeholder="Skills..." ></input><br>
 
         <label for="cv_upload">Upload Documents(Transcript, CV, Letter Of Organisation & CoverLetter in Zip format):</label>
         <input type="file" id="upload_doc" name="upload_doc" accept=".zip" required><br>
@@ -129,7 +130,6 @@ $email = $_SESSION['email'];
         <label for="emergency_contact_relationship">Emergency Contact Relationship:</label>
         <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" placeholder="e.g. Mother etc" required><br>
 
-        <!-- Submit Button -->
         <input type="submit" value="Submit Registration">
     </form>
 </fieldset>

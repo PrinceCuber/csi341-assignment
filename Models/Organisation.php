@@ -5,7 +5,7 @@ include_once __DIR__ . '/../helpers/util.php';
 
 class Organisation {
     // Method to create a new organisation
-    public static function createOrganisation($name, $email, $location, $techPreferences, $password) {
+    public static function createOrganisation($name, $email, $password) {
         $conn = getDatabase();
 
         // Check if the connection is successful
@@ -21,10 +21,10 @@ class Organisation {
             exit();
         }
 
-        $sql = "INSERT INTO organisations (name, email, location, tech_preferences, password) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO organisations (name, email, password) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $stmt->bind_param('sssss', $name, $email, $location, $techPreferences, $hashedPassword);
+        $stmt->bind_param('sss', $name, $email, $hashedPassword);
         $success = $stmt->execute();
         $insertedId = $success ? $conn->insert_id : null;
         $stmt->close();
@@ -35,7 +35,7 @@ class Organisation {
     // Method to get organisation by Email
     public static function getOrganisationByEmail($email) {
         $conn = getDatabase();
-        $sql = "SELECT organisation_id, name, email, location, tech_preferences, password FROM organisations WHERE email = ?";
+        $sql = "SELECT organisation_id, name, email FROM organisations WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -64,6 +64,18 @@ class Organisation {
         $sql = "DELETE FROM organisations WHERE organisation_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $id);
+        $success = $stmt->execute();
+        $stmt->close();
+        $conn->close();
+        return $success;
+    }
+
+    // Method to create an organisation registration
+    public static function createOrganisationRegistration($organisationID, $contact_person, $contact_email, $slots, $skills) {
+        $conn = getDatabase();
+        $sql = "INSERT INTO organisation_registration (organisation_id, contact_person, contact_email, slots, skills) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('issss', $organisationID, $contact_person, $contact_email, $slots, $skills);
         $success = $stmt->execute();
         $stmt->close();
         $conn->close();

@@ -16,6 +16,9 @@ function showOverlay(text) {
     case 'Upcoming visit':
       // TODO: Add logic to fetch and display upcoming visit data
       break;
+    case 'Attachment post':
+      overlay = document.getElementById('post');
+      break;
     case 'Logbooks':
       overlay = document.getElementById('logbooks');
       break;

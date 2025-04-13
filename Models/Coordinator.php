@@ -35,7 +35,7 @@ class Coordinator {
     // Method to get coordinator by Email
     public static function getCoordinatorByEmail($email) {
         $conn = getDatabase();
-        $sql = "SELECT coordinator_id, name, email, password FROM coordinators WHERE email = ?";
+        $sql = "SELECT coordinator_id, name, email FROM coordinators WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();

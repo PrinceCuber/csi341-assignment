@@ -29,9 +29,9 @@ class StudentController {
         }
     }
 
-    public function createAttachment($studentID, $id_Num, $phone_number, $date_Of_Birth, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship) {
+    public function createAttachment($studentID, $id_Num, $phone_number, $date_Of_Birth, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $skills, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship) {
         // Handle file upload
-        if ($this->studentModel->createAttachment($studentID, $id_Num, $phone_number,$date_Of_Birth, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship)) { 
+        if ($this->studentModel->createAttachment($studentID, $id_Num, $phone_number,$date_Of_Birth, $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $skills, $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship)) { 
             header("Location: views/dashboardStudent.php");
             exit();
         } else {

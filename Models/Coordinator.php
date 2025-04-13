@@ -1,14 +1,14 @@
+
 <?php
 
 require_once __DIR__ . '/../config/db.php';
 include_once __DIR__ . '/../helpers/util.php';
 
-class Student {
-    // Method to create a new student
-    public static function createStudent($name, $email, $password) {
+class Coordinator {
+    // Method to create a new coordinate
+    public static function createCoordinator($name, $email, $password) {
         $conn = getDatabase();
-
-        // Check if the connection is successful
+        //check if the connection is successful
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
@@ -21,7 +21,7 @@ class Student {
             exit();
         }
 
-        $sql = "INSERT INTO students (name, email, password) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO coordinators (name, email, password) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $stmt->bind_param('sss', $name, $email, $hashedPassword);
@@ -32,24 +32,24 @@ class Student {
         return $insertedId; 
     }
 
-    // Method to get student by Email
-    public static function getStudentByEmail($email) {
+    // Method to get coordinator by Email
+    public static function getCoordinatorByEmail($email) {
         $conn = getDatabase();
-        $sql = "SELECT student_id, name, email, password FROM students WHERE email = ?";
+        $sql = "SELECT coordinator_id, name, email, password FROM coordinators WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
-        $student = $result->fetch_assoc();
+        $coordinator = $result->fetch_assoc();
         $stmt->close();
         $conn->close();
-        return $student;
+        return $coordinator;
     }
 
-    // Method to update student information
-    public static function updateStudent($id, $name, $email) {
+    // Method to update coordinator information
+    public static function updateCoordinator($id, $name, $email) {
         $conn = getDatabase();
-        $sql = "UPDATE students SET name = ?, email = ?WHERE id = ?";
+        $sql = "UPDATE coordinators SET name = ?, email = ?WHERE coordinator_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ssi', $name, $email, $id);
         $success = $stmt->execute();
@@ -58,10 +58,10 @@ class Student {
         return $success;
     }
 
-    // Method to delete a student
-    public function deleteStudent($id) {
+    // Method to delete a coordinator
+    public function deleteCoordinator($id) {
         $conn = getDatabase();
-        $sql = "DELETE FROM students WHERE id = ?";
+        $sql = "DELETE FROM coordinators WHERE coordinator_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $id);
         $success = $stmt->execute();

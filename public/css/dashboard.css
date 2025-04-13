@@ -77,9 +77,10 @@ body {
   .main-content {
     display: grid;
     grid-template-columns: repeat(2, 150px);
-    gap: 1rem;
+    gap: 1rem 10rem;
     padding: 1rem;
-    margin-left: 220px;
+    justify-content: center;
+    align-content: space-between;
   }
   
   .card {
@@ -88,6 +89,20 @@ body {
     border-radius: 10px;
     text-align: center;
     font-weight: bold;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .card .icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
   }
 
   .overlay {
@@ -104,23 +119,25 @@ body {
   }
   
   .overlay-content {
+    position: relative;
     background: white;
     padding: 20px;
-    border-radius: 5px;
+    width: 80%;
+    height: 600px;
+    border-radius: 8px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  .overlay-content button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+  .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 20px;
     cursor: pointer;
+    font-size: 1.5rem;
+    color: #000;
   }
-  
-  .overlay-content button:hover {
-    background-color: #0056b3;
+
+  .close-icon:hover {
+    color: #ff0000;
   }

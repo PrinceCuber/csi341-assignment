@@ -55,3 +55,12 @@ p {
 .error {
   color: red;
 }
+
+.role-form {
+  display: none;
+  margin-top: 1rem;
+}
+
+.active {
+  display: block;
+}

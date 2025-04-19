@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <div class="top-nav">
+        <div>Student Name</div>
+        <div>
+            <a href="#">Notifications (3)</a>
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="tile overview-tile">
+            <h2>Overview</h2>
+            <p>Current Attachment Status: Active - At Example Organization</p>
+            <p>Next Steps: Submit Weekly Logbook for Week 7</p>
+            <div class="important-dates">
+                Due Date for Final Report: 2025-04-30
+            </div>
+        </div>
+
+        <div class="tile logbook-tile">
+            <h2>Logbook</h2>
+            <p>Weekly Logbooks: 7 of 10 Submitted</p>
+            <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <a href="#">View/Edit Logbooks</a>
+        </div>
+
+        <div class="tile organization-tile">
+            <h2>Organization Details</h2>
+            <p><strong>Organization:</strong> Example Organization</p>
+            <p><strong>Supervisor:</strong> John Doe (john.doe@example.com)</p>
+            <p><strong>Location:</strong> City, Country</p>
+        </div>
+
+        <div class="tile reports-tile">
+            <h2>Reports</h2>
+            <p>Weekly Reports: Submitted</p>
+            <p>Final Report: Not Submitted</p>
+            <a href="#">Submit Final Report</a>
+        </div>
+
+        <div class="tile notification-tile">
+            <h2>Notifications</h2>
+            <ul>
+                <li>2025-03-01: Your logbook for week 6 has been approved.</li>
+                <li>2025-02-22: Reminder: Submit your weekly logbook.</li>
+                <li>2025-02-15: You have been assigned to Example Organization.</li>
+            </ul>
+        </div>
+
+        <div>
+          <a href="#" class="preferences-link">View/Edit Preferences</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

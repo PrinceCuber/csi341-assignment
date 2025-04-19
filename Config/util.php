@@ -1,7 +1,6 @@
 <?php
 
-function getDatabase()
-{
+function getDatabase(){
     // Database details
     $servername = "localhost";
     $username = "root";
@@ -98,3 +97,34 @@ function getDatabase()
 
     return $conn;
 }
+
+// Method to check if email exists in all three tables
+function emailExist($email) {
+    $conn = getDatabase();
+    $email = $conn->real_escape_string($email);
+
+    // Check in students table
+    $sql = "SELECT * FROM students WHERE email='$email'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        return true;
+    }
+
+    // Check in coordinators table
+    $sql = "SELECT * FROM coordinators WHERE email='$email'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        return true;
+    }
+
+    // Check in organisations table
+    $sql = "SELECT * FROM organisations WHERE email='$email'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        return true;
+    }
+
+    return false;
+
+}
+

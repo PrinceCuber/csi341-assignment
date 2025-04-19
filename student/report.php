@@ -2,7 +2,7 @@
 
 
 
-if ($_SERVER["REQUEST_METHOD" =="POST"]){
+if ($_SERVER["REQUEST_METHOD"] =="POST"){
    $student_name = htmlspecialchars($_POST["student-name"]);
    $organization = htmlspecialchars($_POST["organization"]);
    $duration = htmlspecialchars($_POST["duration"]);

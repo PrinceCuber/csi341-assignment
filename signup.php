@@ -1,5 +1,6 @@
 <?php
 include_once 'Config/util.php';
+include_once 'Config/helper.php';
 
 // Include the database connection file
 $conn = getDatabase();
@@ -26,14 +27,24 @@ if (isset($_SESSION['student_id'])) {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the form data
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $user_type = $_POST['user_type'];
+    $name = test_input($_POST['name']);
+    $email = test_input($_POST['email']);
+    $password = test_input($_POST['password']);
+    $user_type = $_POST['role'];
 
     // Validate the input
     if (empty($name) || empty($email) || empty($password) || empty($user_type)) {
-        echo "All fields are required.";
+        header("Location: signup.php?error=All fields are required.");
+        exit();
+    }
+
+    if(emailExist($email)) {
+        header("Location: signup.php?error=Email already exists.");
+        exit();
+    }
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        header("Location: signup.php?error=Invalid email format.");
         exit();
     }
 
@@ -51,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $conn->prepare("INSERT INTO organisations (name, email, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $name, $email, $hashed_password);
     } else {
-        echo "Invalid user type.";
+        header("Location: signup.php?error=Invalid user type.");
         exit();
     }
 
@@ -59,27 +70,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         if ( $user_type == 'student') {
             $_SESSION['student_id'] = $stmt->insert_id;
-            $_SESSION['student_name'] = $name; // Store the name in session
-            $_SESSION['student_email'] = $email; // Store the email in session
-            header("Location: student/dashboard.php");
+            $_SESSION['name'] = $name; // Store the name in session
+            $_SESSION['email'] = $email; // Store the email in session
+            header("Location: student/studentRegistration.php");
         } elseif ($user_type == 'coordinator') {
             $_SESSION['coordinator_id'] = $stmt->insert_id;
-            $_SESSION['coordinator_name'] = $name; // Store the name in session
-            $_SESSION['coordinator_email'] = $email; // Store the email in session
+            $_SESSION['name'] = $name; // Store the name in session
+            $_SESSION['email'] = $email; // Store the email in session
             header("Location: coordinator/dashboard.php");
         } elseif ($user_type == 'organisation') {
             $_SESSION['organisation_id'] = $stmt->insert_id;
-            $_SESSION['organisation_name'] = $name; // Store the name in session
-            $_SESSION['organisation_email'] = $email; // Store the email in session
+            $_SESSION['name'] = $name; // Store the name in session
+            $_SESSION['email'] = $email; // Store the email in session
             header("Location: organisation/dashboard.php");
         }
         exit();
     } else {
-        echo "Error: " . $stmt->error;
+        // Handle error
+        header("Location: signup.php?error=Error creating account. Please try again.");
+        exit();
     }
 
     // Close the statement and connection
     $stmt->close();
 } else {
-    echo "Invalid request method.";
+    // If the form is not submitted, redirect to the signup page
+    header("Location: signup.php");
+    exit();
 }

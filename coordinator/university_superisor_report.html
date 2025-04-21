@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Supervisor Assessment</title>
+    <link rel="stylesheet" href="report.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>University Supervisor Assessment</h2>
+        <form action="/submit-university-assessment" method="POST">
+            <label for="student-name">Student Name:</label>
+            <input type="text" id="student-name" name="student-name" required>
+
+            <label for="attachment-duration">Duration of Attachment:</label>
+            <input type="text" id="attachment-duration" name="attachment-duration" required placeholder="Start Date to End Date">
+
+            <label for="knowledge-assessment">Knowledge of Subject Matter (1-5):</label>
+            <input type="number" id="knowledge-assessment" name="knowledge-assessment" required min="1" max="5">
+
+            <label for="time-management">Time Management and Efficiency (1-5):</label>
+            <input type="number" id="time-management" name="time-management" required min="1" max="5">
+
+            <label for="teamwork">Teamwork and Collaboration (1-5):</label>
+            <input type="number" id="teamwork" name="teamwork" required min="1" max="5">
+
+            <label for="initiative">Initiative and Independence (1-5):</label>
+            <input type="number" id="initiative" name="initiative" required min="1" max="5">
+
+            <label for="overall-performance">Overall Performance (1-5):</label>
+            <input type="number" id="overall-performance" name="overall-performance" required min="1" max="5">
+
+            <label for="comments">Additional Comments:</label>
+            <textarea id="comments" name="comments" rows="5" placeholder="Provide any additional feedback or comments"></textarea>
+
+            <button type="submit">Submit Assessment</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -4,92 +4,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up | Academic Attachment Portal</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
+
     html, body {
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, rgba(0, 90, 156, 0.5), rgba(100, 179, 244, 0.5));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
+        height: 100%;
+        width: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, rgba(0, 90, 156, 0.5), rgba(163, 209, 247, 0.5));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+
     .signup-box {
-      background-color: rgba(0, 0, 50, 0.6);
-      padding: 60px;
-      border-radius: 16px;
-      width: 95%;
-      max-width: 700px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 50, 0.6);
+        padding: 60px 50px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
+
     h2 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 2.2rem;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2rem;
     }
+
     form {
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
     }
+
     label {
-      font-size: 1rem;
-      margin-bottom: 8px;
+        margin-bottom: 6px;
+        display: block;
+        font-size: 1rem;
     }
-    input[type="email"],
-    input[type="password"] {
-      padding: 14px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-      width: 100%;
+
+    input {
+        padding: 14px;
+        border-radius: 8px;
+        border: none;
+        font-size: 1rem;
+        width: 100%;
     }
-    .password-wrapper {
-      position: relative;
-    }
-    .toggle-password {
-      position: absolute;
-      top: 50%;
-      right: 16px;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 14px;
-      background: none;
-      border: none;
-      color: #fff;
-    }
+
     input::placeholder {
-      color: #ccc;
+        color: #aaa;
     }
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 16px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+
     .btn-create {
-      padding: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      background-color: #28a745;
-      color: white;
-      transition: background-color 0.3s;
-      margin-top: 10px;
+        padding: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #007bff;
+        color: white;
+        transition: background-color 0.3s;
+        margin-top: 10px;
     }
+
     .btn-create:hover {
-      background-color: #218838;
+        background-color: #0056b3;
     }
   </style>
 </head>
 <body>
   <div class="signup-box">
     <h2>Create Your Account</h2>
-    <form action="signup_process.php" method="POST" onsubmit="return validateSignup()">
+    <form action="signup_process.php" method="POST" onsubmit="return validateSignup(event)">
       <div>
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
@@ -113,24 +125,27 @@
   </div>
 
   <script>
-    function validateSignup() {
+    function validateSignup(e) {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
       const confirmPassword = document.getElementById('confirm_password').value.trim();
 
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
       if (!emailPattern.test(email)) {
         alert('Please enter a valid email.');
+        e.preventDefault();
         return false;
       }
 
       if (password.length < 6) {
         alert('Password must be at least 6 characters long.');
+        e.preventDefault();
         return false;
       }
 
       if (password !== confirmPassword) {
         alert('Passwords do not match.');
+        e.preventDefault();
         return false;
       }
 
@@ -139,13 +154,13 @@
 
     function togglePassword(id) {
       const field = document.getElementById(id);
-      const toggleBtn = field.nextElementSibling;
-      if (field.type === 'password') {
-        field.type = 'text';
-        toggleBtn.textContent = 'Hide';
+      const button = field.nextElementSibling;
+      if (field.type === "password") {
+        field.type = "text";
+        button.textContent = "Hide";
       } else {
-        field.type = 'password';
-        toggleBtn.textContent = 'Show';
+        field.type = "password";
+        button.textContent = "Show";
       }
     }
   </script>

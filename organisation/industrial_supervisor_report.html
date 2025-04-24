@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Supervisor Assessment</title>
+    <link rel="stylesheet" href="report.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Industrial Supervisor Assessment</h2>
+        <form action="submit_industrial_assessment.php" method="POST">
+            <label for="student-name">Student Name:</label>
+            <input type="text" id="student-name" name="student-name" required>
+
+            <label for="organization">Organization Name:</label>
+            <input type="text" id="organization" name="organization" required>
+
+            <label for="skills-assessment">Skills and Technical Competence (1-5):</label>
+            <input type="number" id="skills-assessment" name="skills-assessment" required min="1" max="5">
+
+            <label for="work-ethic">Work Ethic and Commitment (1-5):</label>
+            <input type="number" id="work-ethic" name="work-ethic" required min="1" max="5">
+
+            <label for="communication">Communication Skills (1-5):</label>
+            <input type="number" id="communication" name="communication" required min="1" max="5">
+
+            <label for="problem-solving">Problem-Solving Skills (1-5):</label>
+            <input type="number" id="problem-solving" name="problem-solving" required min="1" max="5">
+
+            <label for="professionalism">Professionalism and Behavior (1-5):</label>
+            <input type="number" id="professionalism" name="professionalism" required min="1" max="5">
+
+            <label for="overall-feedback">Overall Feedback:</label>
+            <textarea id="overall-feedback" name="overall-feedback" rows="5" placeholder="Provide any additional comments on the student's performance"></textarea>
+
+            <button type="submit">Submit Assessment</button>
+        </form>
+    </div>
+</body>
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        let isValid = true;
+        const min = 1;
+        const max = 5;
+        const fields = [
+            { id: 'student-name', type: 'text' },
+            { id: 'organization', type: 'text' },
+            { id: 'skills-assessment', type: 'number' },
+            { id: 'work-ethic', type: 'number' },
+            { id: 'communication', type: 'number' },
+            { id: 'problem-solving', type: 'number' },
+            { id: 'professionalism', type: 'number' },
+        ];
+    
+        // Reset any previous error styles/messages
+        fields.forEach(field => {
+            const input = document.getElementById(field.id);
+            input.style.borderColor = '';
+            if (input.nextElementSibling && input.nextElementSibling.classList.contains('error')) {
+                input.nextElementSibling.remove();
+            }
+        });
+    
+        fields.forEach(field => {
+            const input = document.getElementById(field.id);
+            const value = input.value.trim();
+    
+            let errorMsg = '';
+            if (field.type === 'text' && value === '') {
+                errorMsg = 'This field is required.';
+            }
+    
+            if (field.type === 'number') {
+                const numValue = Number(value);
+                if (value === '' || isNaN(numValue) || numValue < min || numValue > max) {
+                    errorMsg = `Enter a number between ${min} and ${max}.`;
+                }
+            }
+    
+            if (errorMsg) {
+                isValid = false;
+                input.style.borderColor = 'red';
+    
+                const error = document.createElement('div');
+                error.className = 'error';
+                error.style.color = 'red';
+                error.style.fontSize = '0.9em';
+                error.textContent = errorMsg;
+                input.parentNode.insertBefore(error, input.nextSibling);
+            }
+        });
+    
+        if (!isValid) {
+            e.preventDefault(); // Stop form from submitting
+        }
+    });
+    </script>
+    
+</html>

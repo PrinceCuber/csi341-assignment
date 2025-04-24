@@ -12,7 +12,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up | Academic Attachment Portal</title>
+  <title>Login | Academic Attachment Portal</title>
   <style>
     * {
         margin: 0;
@@ -31,7 +31,7 @@
         justify-content: center;
     }
 
-    .signup-box {
+    .login-box {
         background-color: rgba(0, 0, 50, 0.6);
         padding: 60px 50px;
         border-radius: 12px;
@@ -58,7 +58,8 @@
         font-size: 1rem;
     }
 
-    input {
+    input,
+    select {
         padding: 14px;
         border-radius: 8px;
         border: none;
@@ -68,6 +69,11 @@
 
     input::placeholder {
         color: #aaa;
+    }
+
+    select {
+        background-color: white;
+        color: #333;
     }
 
     .password-wrapper {
@@ -86,31 +92,70 @@
         cursor: pointer;
     }
 
-    .btn-create {
+    .button-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .btn {
+        flex: 1;
         padding: 14px;
         font-weight: bold;
         cursor: pointer;
         border: none;
         border-radius: 8px;
         font-size: 1rem;
-        background-color: #007bff;
-        color: white;
+        text-align: center;
         transition: background-color 0.3s;
-        margin-top: 10px;
     }
 
-    .btn-create:hover {
+    .btn.login {
+        background-color: white;
+        color: #005a9c;
+    }
+
+    .btn.login:hover {
+        background-color: #e2e2e2;
+    }
+
+    .btn.signup {
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn.signup:hover {
         background-color: #0056b3;
+    }
+
+    .forgot-password {
+        text-align: center;
+        margin-top: 12px;
+    }
+
+    .forgot-password a {
+        color: #ffffffcc;
+        font-size: 0.9rem;
+        text-decoration: underline;
+    }
+
+    .forgot-password a:hover {
+        color: #fff;
     }
   </style>
 </head>
 <body>
-  <div class="signup-box">
-    <h2>Create Your Account</h2>
-    <form action="signup_process.php" method="POST" onsubmit="return validateSignup(event)">
+  <div class="login-box">
+    <h2>Login to Your Account</h2>
+    <form action="login_process.php" method="POST" onsubmit="return validateLogin()">
       <div>
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
+        <input type="email" name="email" id="email" placeholder="thabo@gmail.com" required>
       </div>
       <div>
         <label for="password">Password</label>
@@ -120,38 +165,38 @@
         </div>
       </div>
       <div>
-        <label for="confirm_password">Confirm Password</label>
-        <div class="password-wrapper">
-          <input type="password" name="confirm_password" id="confirm_password" placeholder="********" required>
-          <button type="button" class="toggle-password" onclick="togglePassword('confirm_password')">Show</button>
-        </div>
+        <label for="role">Select Role</label>
+        <select name="role" id="role" required>
+          <option value="">Select your role</option>
+          <option value="student">Student</option>
+          <option value="industrial_supervisor">Industrial Supervisor</option>
+          <option value="university_coordinator">University Coordinator</option>
+        </select>
       </div>
-      <button type="submit" class="btn-create">Create Account</button>
+      <div class="button-row">
+        <button type="submit" class="btn login">Login</button>
+        <a href="signup.php" class="btn signup">Sign Up</a>
+      </div>
+      <div class="forgot-password">
+        <a href="forgot_password.php">Forgot Password?</a>
+      </div>
     </form>
   </div>
 
   <script>
-    function validateSignup(e) {
+    function validateLogin() {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
-      const confirmPassword = document.getElementById('confirm_password').value.trim();
+      const role = document.getElementById('role').value;
+
+      if (!email || !password || !role) {
+        alert('Please fill in all fields.');
+        return false;
+      }
 
       const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
       if (!emailPattern.test(email)) {
         alert('Please enter a valid email.');
-        e.preventDefault();
-        return false;
-      }
-
-      if (password.length < 6) {
-        alert('Password must be at least 6 characters long.');
-        e.preventDefault();
-        return false;
-      }
-
-      if (password !== confirmPassword) {
-        alert('Passwords do not match.');
-        e.preventDefault();
         return false;
       }
 
@@ -172,3 +217,4 @@
   </script>
 </body>
 </html>
+

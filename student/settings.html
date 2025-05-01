@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Reuse your existing CSS variables and base styles */
+        :root {
+            --primary: #2563eb;
+            --secondary: #3b82f6;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #f8fafc;
+            --card-bg: white;
+        }
+
+        body.dark-mode {
+            --text: #f8fafc;
+            --text-light: #94a3b8;
+            --bg: #1e293b;
+            --card-bg: #0f172a;
+        }
+
+        /* Settings Page Specific Styles */
+        .settings-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1rem;
+        }
+
+        .settings-nav a {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .settings-nav a.active,
+        .settings-nav a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .settings-section {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: border-color 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-save {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-save:hover {
+            opacity: 0.9;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Dark mode adjustments */
+        body.dark-mode .settings-nav {
+            border-bottom-color: #334155;
+        }
+
+        body.dark-mode .form-control {
+            background: #1e293b;
+            border-color: #334155;
+        }
+    </style>
+</head>
+<body>
+    <!-- Reuse your existing header -->
+    <header class="top-nav">
+        <div class="user-info">
+            <div class="avatar">SN</div>
+            <div class="student-name">student-name</div>
+        </div>
+        <nav class="nav-links">
+            <a href="test.html"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </a>
+            <a href="settings.html" class="nav-link active">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </nav>
+    </header>
+
+    <main class="settings-container">
+        <div class="settings-header">
+            <h2><i class="fas fa-cog"></i> Settings</h2>
+        </div>
+
+        <nav class="settings-nav">
+            <a href="#profile" class="active"><i class="fas fa-user"></i> Profile</a>
+            <a href="#notifications"><i class="fas fa-bell"></i> Notifications</a>
+            <a href="#security"><i class="fas fa-shield-alt"></i> Security</a>
+            <a href="#preferences"><i class="fas fa-sliders-h"></i> Preferences</a>
+        </nav>
+
+        <!-- Profile Settings -->
+        <section id="profile" class="settings-section">
+            <h3><i class="fas fa-user"></i> Profile Information</h3>
+            
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" class="form-control" placeholder="Sarah Nelson">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="sarah.nelson@university.edu">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" placeholder="+267 712 345 678">
+            </div>
+
+            <button class="btn-save">Save Changes</button>
+        </section>
+
+        <!-- Notification Settings -->
+        <section id="notifications" class="settings-section">
+            <h3><i class="fas fa-bell"></i> Notification Preferences</h3>
+            
+            <div class="form-group">
+                <label class="toggle-label">
+                    <span>Email Notifications</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="toggle-label">
+                    <span>SMS Notifications</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="toggle-label">
+                    <span>Deadline Reminders</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="toggle-label">
+                    <span>Assessment Alerts</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+        </section>
+
+        <!-- Security Settings -->
+        <section id="security" class="settings-section">
+            <h3><i class="fas fa-shield-alt"></i> Security Settings</h3>
+            
+            <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm New Password</label>
+                <input type="password" id="confirmPassword" class="form-control">
+            </div>
+
+            <button class="btn-save">Update Password</button>
+        </section>
+
+        <!-- Preferences -->
+        <section id="preferences" class="settings-section">
+            <h3><i class="fas fa-sliders-h"></i> Application Preferences</h3>
+            
+            <div class="form-group">
+                <label class="toggle-label">
+                    <span>Dark Mode</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="language">Language</label>
+                <select id="language" class="form-control">
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="timezone">Timezone</label>
+                <select id="timezone" class="form-control">
+                    <option value="EAT">East Africa Time (EAT)</option>
+                    <option value="UTC">UTC</option>
+                </select>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        
+        // Check localStorage for theme preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark-mode') {
+            body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+
+        darkModeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-mode');
+            
+            // Save to localStorage
+            const theme = body.classList.contains('dark-mode') ? 'dark-mode' : '';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Tab switching functionality
+        document.querySelectorAll('.settings-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.settings-nav a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all sections
+                document.querySelectorAll('.settings-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Show the selected section
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).style.display = 'block';
+            });
+        });
+
+        // Show the first section by default
+        document.querySelector('.settings-nav a.active').click();
+    </script>
+</body>
+</html>

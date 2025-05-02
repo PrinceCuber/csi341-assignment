@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     move_uploaded_file($_FILES["upload_doc"]["tmp_name"], $doc_path);
 
-    if(isset($_POST['doc_path'])){
+    if (isset($_POST['doc_path'])) {
         $doc_path = test_input($_POST['upload_doc']);
     }
 
@@ -78,12 +78,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     )";
 
     $conn->prepare($sql);
-    $stmt->bind_param("ssssssssssss", $omang_Or_passportNo, $phone_number, $email_Address, $date_Of_Birth,
-        $attachment_Start_Date, $attachment_End_Date, $preferred_Location, $experience,
-        $doc_path, $emergency_Contact_Name, $emergency_Contact_Phone, $emergency_Contact_Relationship
+    $stmt->bind_param(
+        "ssssssssssss",
+        $omang_Or_passportNo,
+        $phone_number,
+        $email_Address,
+        $date_Of_Birth,
+        $attachment_Start_Date,
+        $attachment_End_Date,
+        $preferred_Location,
+        $experience,
+        $doc_path,
+        $emergency_Contact_Name,
+        $emergency_Contact_Phone,
+        $emergency_Contact_Relationship
     );
     if ($stmt->execute()) {
-        header("Location: student/dashboard.php?success=Registration successful.");
+        header("Location: dashboard.php?success=Registration successful.");
         exit();
     } else {
         // TODO: replace with a more user-friendly error message
@@ -97,3 +108,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="../public/css/index.css">
+    <link rel="stylesheet" href="../public/css/studentRegistration.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Student Registration</h1>
+        </header>
+
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="id_Num">Omang/Passport No:</label>
+                <input type="text" id="id_Num" name="id_Num" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="start_date">Attachment Start Date:</label>
+                <input type="date" id="start_date" name="start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">Attachment End Date:</label>
+                <input type="date" id="end_date" name="end_date" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Preferred Location:</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience:</label>
+                <textarea id="experience" name="experience" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="upload_doc">Upload Document:</label>
+                <input type="file" id="upload_doc" name="upload_doc" required>
+            </div>
+            <div class="form-group">
+                <label for="emergency_contact_name">Emergency Contact Name:</label>
+                <input type="text" id="emergency_contact_name" name="emergency_contact_name" required>
+            </div>
+            <div class="form-group">
+                <label for="emergency_contact_phone">Emergency Contact Phone:</label>
+                <input type="text" id="emergency_contact_phone" name="emergency_contact_phone" required>
+            </div>
+            <div class="form-group">
+                <label for="emergency_contact_relationship">Emergency Contact Relationship:</label>
+                <input type="text" id="emergency_contact_relationship" name="emergency_contact_relationship" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</body>

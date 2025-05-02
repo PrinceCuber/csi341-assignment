@@ -51,7 +51,12 @@ $email = $_SESSION['email'];
       <p>filter</p>
       <?php
       $conn = getDatabase();
-      $stmt = $conn->prepare("SELECT * FROM students");
+      $sql = "SELECT s.* 
+              FROM students s 
+              INNER JOIN attachments a ON s.student_id = a.student_id 
+              WHERE a.complete = 1";
+
+      $stmt = $conn->prepare($sql);
       $stmt->execute();
       $result = $stmt->get_result();
       if ($result->num_rows > 0) {

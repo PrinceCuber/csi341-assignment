@@ -67,6 +67,7 @@ function getDatabase(){
             emergency_contact_name VARCHAR(255) NOT NULL,
             emergency_contact_phone VARCHAR(255) NOT NULL,
             emergency_contact_relationship VARCHAR(255) NOT NULL,
+            completed TINYINT(1) DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
         )";

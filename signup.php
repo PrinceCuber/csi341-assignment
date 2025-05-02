@@ -13,6 +13,8 @@ if (isset($_SESSION['student_id'])) {
   exit;
 }
 
+$conn = getDatabase();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $name = test_input($_POST['name']);
   $email = test_input($_POST['email']);
@@ -40,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Hash the password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    if($role === 'student') {
-      $stmt = $conn->prepare("INSERT INTO students (name, email, password) VALUES (?, ?)");
-      $stmt->bind_param("ss", $email, $hashed_password);
+    if ($role === 'student') {
+      $stmt = $conn->prepare("INSERT INTO students (name, email, password) VALUES (?, ?, ?)");
+      $stmt->bind_param("sss",$name, $email, $hashed_password);
       $stmt->execute();
       $_SESSION['student_id'] = $conn->insert_id;
       $_SESSION['email'] = $email;
@@ -50,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       header('Location: student/dashboard.php');
       exit();
     } elseif ($role === 'organisation') {
-      $stmt = $conn->prepare("INSERT INTO organisations (email, password) VALUES (?, ?)");
-      $stmt->bind_param("ss", $email, $hashed_password);
+      $stmt = $conn->prepare("INSERT INTO organisations (name, email, password) VALUES (?, ?, ?)");
+      $stmt->bind_param("sss",$name, $email, $hashed_password);
       $stmt->execute();
       $_SESSION['organisation_id'] = $conn->insert_id;
       $_SESSION['email'] = $email;
@@ -59,12 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       header('Location: organisation/dashboard.php');
       exit();
     } elseif ($role === 'coordinator') {
-      $stmt = $conn->prepare("INSERT INTO coordinators (email, password) VALUES (?, ?)");
-      $stmt->bind_param("ss", $email, $hashed_password);
+      $stmt = $conn->prepare("INSERT INTO coordinators (name, email, password) VALUES (?, ?, ?)");
+      $stmt->bind_param("sss",$name, $email, $hashed_password);
       $stmt->execute();
       $_SESSION['coordinator_id'] = $conn->insert_id;
       $_SESSION['email'] = $email;
       $_SESSION['name'] = $name;
+      die("here");
       header('Location: coordinator/dashboard.php');
       exit();
     } else {
@@ -127,7 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       font-size: 1rem;
     }
 
-    input, select {
+    input,
+    select {
       padding: 14px;
       border-radius: 8px;
       border: none;
@@ -179,6 +183,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Create Your Account</h2>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" onsubmit="return validateSignup(event)">
       <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="John Doe" required>
+      </div>
+      <div>
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
       </div>
@@ -195,17 +203,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="password" name="confirm_password" id="confirm_password" placeholder="********" required>
           <button type="button" class="toggle-password" onclick="togglePassword('confirm_password')">Show</button>
         </div>
-      <div>
-        <label for="role">Role</label>
-        <div class="password-wrapper">
-          <select name="role" id="role"required>
-            <option value="" disabled selected>Select your role</option>
-            <option value="student">Student</option>
-            <option value="organisation">Organisation</option>
-            <option value="coordinator">Coordinator</option>
-          </select>
+        <div>
+          <label for="role">Role</label>
+          <div class="password-wrapper">
+            <select name="role" id="role" required>
+              <option value="" disabled selected>Select your role</option>
+              <option value="student">Student</option>
+              <option value="organisation">Organisation</option>
+              <option value="coordinator">Coordinator</option>
+            </select>
+          </div>
         </div>
-      </div>
       </div>
       <button type="submit" class="btn-create">Create Account</button>
     </form>

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['student_id'])) {
-  header("Location: login.html");
+  header("Location: ../login.php");
   exit();
 }
 
@@ -18,9 +18,9 @@ $email = $_SESSION['email'];
 <head>
   <meta charset="UTF-8">
   <title>IAMS Dashboard</title>
-  <link rel="stylesheet" href="/public/css/index.css">
-  <link rel="stylesheet" href="/public/css/dashboard.css">
-  <script src="/public/js/dashboard.js"></script>
+  <link rel="stylesheet" href="../public/css/index.css">
+  <link rel="stylesheet" href="../public/css/dashboard.css">
+  <script src="../public/js/dashboard.js"></script>
 </head>
 
 <body>
@@ -38,17 +38,15 @@ $email = $_SESSION['email'];
         <a href="homeStudent.php" class="nav-btn"><i class="icon">🏠</i> Home</a>
         <a class="nav-btn active"><i class="icon">📊</i> Dashboard</a>
         <a href="#" class="nav-btn"><i class="icon">⚙️</i> Settings</a>
-        <a href="#" class="nav-btn"><i class="icon">🔔</i> Notifications</a>
-        <a href="../logout.php" class="nav-btn"><i class="icon">🔓</i>logout</a>
+        <a href="../logout.php" class="nav-btn"><i class="icon">🔓</i>Logout</a>
       </nav>
     </aside>
 
     <main class="main-content">
-      <div class="card" onclick="showOverlay('Student overview')">Student overview</div>
-      <div class="card" onclick="showOverlay('Assessment report')">Assessment report</div>
-      <div class="card" onclick="showOverlay('Logbook tracker')">Logbook tracker</div>
-      <div class="card" onclick="showOverlay('Reminders')">Reminders</div>
-      <div class="card" onclick="showOverlay('Upcoming visit')">Upcoming visit</div>
+      <p>Notification</p>
+      <p>Application</p>
+      <p>Progress to applying</p>
+      <p>Logbook</p>
     </main>
 
     <div id="overlay" class="overlay" style="display: none;">

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['organisation_id'])) {
-    header("Location: login.html");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -42,14 +42,8 @@ $email = $_SESSION['email'];
         </aside>
 
         <main class="main-content">
-            <div class="card" onclick="showOverlay('Attachment post')">
-                <p>Attachment Post</p>
-                <i class="icon">📘</i>
-            </div>
-            <div class="card" onclick="showOverlay('Assessment reports')">
-                <p>Assessment reports</p>
-                <i class="icon">📄</i>
-            </div>
+            <p>Notification</p>
+            <p>Posting</p>
         </main>
 
         <section id="post" class="overlay" style="display: none;">

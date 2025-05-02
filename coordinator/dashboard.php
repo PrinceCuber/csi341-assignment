@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['coordinator_id'])) {
-  header("Location: login.html");
+  header("Location: ../login.php");
   exit();
 }
 

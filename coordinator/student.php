@@ -9,10 +9,24 @@ if (!isset($_SESSION['coordinator_id'])) {
   exit();
 }
 
+$studentID = $_GET['id'] ?? null;
+
 $user_id = $_SESSION['coordinator_id'];
 $username = $_SESSION['name'];
 $email = $_SESSION['email'];
 
+$conn = getDatabase();
+$stmt = $conn->prepare("SELECT * FROM students WHERE student_id = ?");
+$stmt->bind_param("i", $studentID);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+  $student = $result->fetch_assoc();
+  $studentName = $student['name'];
+} else {
+  header("Location: dashboard.php?error=student_not_found");
+  exit();
+}
 
 ?>
 <!DOCTYPE html>
@@ -46,31 +60,11 @@ $email = $_SESSION['email'];
     </aside>
 
     <main class="main-content">
-      <header class="header">Industrial Attachment Management System (IAMS)</header>
-      <button>Match students automatically</button>
-      <p>filter</p>
-      <?php
-      $conn = getDatabase();
-      $stmt = $conn->prepare("SELECT * FROM students");
-      $stmt->execute();
-      $result = $stmt->get_result();
-      if ($result->num_rows > 0) {
-        echo "<h2>Students List</h2>";
-        // Fetch all students
-        echo "<table>";
-        echo "<tr><th>Name</th><th>Email</th></tr>";
-        while ($row = $result->fetch_assoc()) {
-          // Make the whole row clickable
-          echo "<tr onclick=\"window.location.href='student.php?id=" . $row['student_id'] . "'\">";
-          echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-          echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-          echo "</tr>";
-        }
-        echo "</table>";
-      } else {
-        echo "<p>No students found.</p>";
-      }
-      ?>
+      <a href="dashboard.php"><=== Back</a>
+      <header class="header"><?php echo $studentName?></header>
+      <p>Organisation attached at</p>
+      <p>Logbook</p>
+      <p>Report</p>
     </main>
   </div>
 

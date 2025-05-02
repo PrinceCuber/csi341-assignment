@@ -1,17 +1,32 @@
-
 :root {
-    --primary-color: #D2B48C; 
-    --secondary-color: #FAF6F0;  
-    --accent-color: #8B5E3C; 
-    --text-color: #4B3621;  
+    --primary-color: #FFDA1F; /* Goldish color */
+    --secondary-color: #FBAC23; /* Slightly darker gold */
+    --accent-color: #20C2FE; /* Accent color */
+    --text-color: black;  
+    --background-color: linear-gradient(to bottom, #ffffff, #f0f0f0); /* Light gradient */
+}
+
+body.dark-mode {
+    --primary-color: #c6a800; /* Gold for highlights */
+    --secondary-color: #333333; /* Dark gray for contrast */
+    --accent-color: #FFD700; /* Gold for buttons and accents */
+    --text-color: #FFFFFF; /* White text for readability */
+    --background-color: linear-gradient(to bottom, #000000, #151515, #333333); /* Dark gradient */
 }
 
 /* General Body */
+html, body {
+    height: 100%; /* Ensure the body and html elements cover the full height of the viewport */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
 body {
-    background-color: var(--secondary-color);
+    background: var(--background-color);
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased; /* Smoother fonts */
     -moz-osx-font-smoothing: grayscale;
+    background-attachment: fixed; /* Ensure the gradient stays fixed during scrolling */
 }

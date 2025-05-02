@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header('Location: login.php?error=invalid_email');
     exit();
-  } elseif (empty($email) || empty($password) || empty($role)) {
+  } elseif (empty($email) || empty($password)) {
     header('Location: login.php?error=empty_fields');
     exit();
   } 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows > 0) {
       $user = $result->fetch_assoc();
       if (password_verify($password, $user['password'])) {
-        $_SESSION['student_id'] = $user['id'];
+        $_SESSION['student_id'] = $user['student_id'];
         $_SESSION['email'] = $email;
         $_SESSION['name'] = $user['name'];
         header('Location: student/dashboard.php');
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
     if (password_verify($password, $user['password'])) {
-      $_SESSION['organisation_id'] = $user['id'];
+      $_SESSION['organisation_id'] = $user['organisation_id'];
       $_SESSION['email'] = $email;
       $_SESSION['name'] = $user['name'];
       header('Location: organisation/dashboard.php');
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
     if (password_verify($password, $user['password'])) {
-      $_SESSION['coordinator_id'] = $user['id'];
+      $_SESSION['coordinator_id'] = $user['coordinator_id'];
       $_SESSION['email'] = $email;
       $_SESSION['name'] = $user['name'];
       header('Location: coordinator/dashboard.php');
@@ -89,15 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       header('Location: login.php?error=invalid_password');
       exit();
     }
-  } else {
-    header('Location: login.php?error=invalid_role');
-    exit();
-  }
-
-  } else {
-    header('Location: login.php?error=invalid_request');
-    exit();
-  }
+  } 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -247,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <div class="login-box">
     <h2>Login to Your Account</h2>
-    <form action="login_process.php" method="POST" onsubmit="return validateLogin()">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" onsubmit="return validateLogin()">
       <div>
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="thabo@gmail.com" required>

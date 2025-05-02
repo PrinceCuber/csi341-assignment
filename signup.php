@@ -67,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['coordinator_id'] = $conn->insert_id;
       $_SESSION['email'] = $email;
       $_SESSION['name'] = $name;
-      die("here");
       header('Location: coordinator/dashboard.php');
       exit();
     } else {
@@ -216,6 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
       </div>
       <button type="submit" class="btn-create">Create Account</button>
+      <a href="login.php" class="btn">Already have an account? Login</a>
     </form>
   </div>
 

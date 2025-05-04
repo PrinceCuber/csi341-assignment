@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinator Dashboard | IAMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f72585;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --sidebar-bg: #2b2d42;
+            --sidebar-text: #f8f9fa;
+            --border: #e9ecef;
+            --radius: 12px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            --primary: #4895ef;
+            --primary-light: #4361ee;
+            --secondary: #3a0ca3;
+            --text: #f8f9fa;
+            --text-light: #adb5bd;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --sidebar-bg: #1a1a2e;
+            --border: #2d2d2d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .user-profile {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-email {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-btn i {
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: var(--bg);
+        }
+
+        .dashboard-title {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .action-card:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .action-card:hover i {
+            color: white;
+        }
+
+        .action-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .action-card p {
+            font-weight: 500;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .overlay-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            width: 80%;
+            max-width: 1000px;
+            max-height: 80vh;
+            padding: 2rem;
+            position: relative;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .close-icon:hover {
+            color: var(--danger);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:hover {
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        /* Buttons */
+        button, .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Form Elements */
+        form {
+            display: inline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem;
+            }
+            
+            .overlay-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card, .action-card {
+            animation: fadeIn 0.4s ease-out;
+        }
+        .footer {
+  background-color: var(--header-bg);
+  color: var(--header-color);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: 2rem;
+}
+
+.footer a {
+  color: var(--header-color);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        Industrial Attachment Management System (IAMS)
+        <div class="header-actions">
+            <button id="themeToggle" class="btn btn-primary">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="user-icon.png" alt="User icon" class="profile-pic">
+                <p class="user-name">Coordinator Name</p>
+                <p class="user-email">email@example.com</p>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-btn"><i class="fas fa-home"></i> Home</a>
+                <a class="nav-btn active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a class="nav-btn"><i class="fas fa-user-graduate"></i> Students</a>
+                <a class="nav-btn"><i class="fas fa-building"></i> Organizations</a>
+                <a class="nav-btn"><i class="fas fa-book"></i> Logbooks</a>
+                <a class="nav-btn"><i class="fas fa-file-alt"></i> Reports</a>
+                <a class="nav-btn"><i class="fas fa-bell"></i> Notifications</a>
+                <a class="nav-btn"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="nav-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="dashboard-title">Coordinator Dashboard</h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Students</h3>
+                    <div class="value">100</div>
+                    <p><i class="fas fa-arrow-up text-success"></i> 5% from last month</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Reports</h3>
+                    <div class="value">5</div>
+                    <p>Need your review</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Unreviewed Logbooks</h3>
+                    <div class="value">3</div>
+                    <p>Waiting for feedback</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Organizations</h3>
+                    <div class="value">12</div>
+                    <p>Participating this term</p>
+                </div>
+            </div>
+
+            <h2>Quick Actions</h2>
+            <div class="quick-actions">
+                <div class="action-card" onclick="showOverlay('logbooks')">
+                    <i class="fas fa-book"></i>
+                    <p>Review Logbooks</p>
+                </div>
+                <div class="action-card" onclick="showOverlay('reports')">
+                    <i class="fas fa-file-alt"></i>
+                    <p>Assessment Reports</p>
+                </div>
+                <div class="action-card" onclick="showOverlay('students')">
+                    <i class="fas fa-user-graduate"></i>
+                    <p>Manage Students</p>
+                </div>
+                <div class="action-card" onclick="showOverlay('organizations')">
+                    <i class="fas fa-building"></i>
+                    <p>Organizations</p>
+                </div>
+            </div>
+
+            <h2>Recent Activity</h2>
+            <div class="recent-activity">
+                <p>No recent activity</p>
+            </div>
+        </main>
+    </div>
+
+    <section id="logbooks" class="overlay">
+        <div class="overlay-content">
+            <span class="close-icon" onclick="closeOverlay()">&times;</span>
+            <h2>Student Logbooks</h2>
+            <p>Logbook management content goes here</p>
+        </div>
+    </section>
+
+    <section id="reports" class="overlay">
+        <div class="overlay-content">
+            <span class="close-icon" onclick="closeOverlay()">&times;</span>
+            <h2>Assessment Reports</h2>
+            <p>Report management content goes here</p>
+        </div>
+    </section>
+
+    <section id="students" class="overlay">
+        <div class="overlay-content">
+            <span class="close-icon" onclick="closeOverlay()">&times;</span>
+            <h2>Student Management</h2>
+            <p>Student listing and actions can be integrated here via JS.</p>
+        </div>
+    </section>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark-mode') {
+            body.classList.add('dark-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode');
+        });
+
+        function showOverlay(id) {
+            document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeOverlay() {
+            document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
+        }
+        
+    </script>
+</body>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Industrial Attachment Management System (IAMS). All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a> |
+        <a href="#">Terms of Service</a> |
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
+</html>

@@ -95,6 +95,15 @@ function getDatabase(){
 
     $conn->query($sql);
 
+    $sql = "CREATE TABLE IF NOT EXISTS notifications (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            id_num VARCHAR(255) NOT NULL,
+            user_type ENUM('student', 'coordinator', 'organisation') NOT NULL,
+            message TEXT NOT NULL,
+            status ENUM('unread', 'read') DEFAULT 'unread',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )";
+
     return $conn;
 }
 
